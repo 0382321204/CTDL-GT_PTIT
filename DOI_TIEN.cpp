@@ -1,21 +1,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int menhgia[] = {1000, 500, 200, 100, 50, 20, 10, 5, 2, 1};
+int n, s, a[35], kq = 1000;
 
-main(){
-    int t; cin >> t;
-    while(t--){
-        int sotien, dem = 0; 
-        cin >> sotien;
-        while(sotien > 0){
-            for(int i = 0; i < 10; i++){
-                int soTotien = sotien / menhgia[i];
-                if(soTotien != 0) dem = dem + soTotien;
-                sotien = sotien - soTotien * menhgia[i];
-            }
-        }
-        cout << dem << endl;
+void quaylui(int i, int sum, int ans){
+    if(sum > s || ans > kq) return;
+    if(i == n){
+        if(sum == s) kq = min(kq, ans);
+        return;
     }
-    return 0;
+    quaylui(i+1, sum, ans);
+    quaylui(i+1, sum+a[i], ans+1);
+}
+main(){
+    cin >> n >> s;
+    for(int i = 0; i < n; i++) cin >> a[i];
+    quaylui(0,0,0);
+    if(kq == 1000) cout << -1;
+    else cout << kq;
 }
